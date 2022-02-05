@@ -1,0 +1,28 @@
+logging:
+  config: classpath:logback-dev.xml
+  level:
+    root: INFO
+server:
+  forward-headers-strategy: framework
+  port: 8080
+spring:
+  application:
+    name: sample-cgd
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3360/cgd?useSSL=false
+    username: root
+    password: root
+  hateoas:
+    use-hal-as-default-json-media-type: false
+  http:
+    encoding:
+      charset: UTF-8
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  main:
+    banner-mode: 'OFF'

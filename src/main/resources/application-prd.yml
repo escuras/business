@@ -1,0 +1,38 @@
+logging:
+    config: classpath:logback-spring.xml
+    level:
+        root: ERROR
+server:
+    forward-headers-strategy: framework
+    port: 8080
+spring:
+    application:
+        name: ms-sample
+    datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+        password: ${DB_PASSWORD}
+        url: ${DB_URL}
+        username: ${DB_USER}
+    hateoas:
+        use-hal-as-default-json-media-type: false
+    http:
+        encoding:
+            charset: UTF-8
+    jackson:
+        parser:
+            allow-backslash-escaping-any-character: true
+            allow-unquoted-control-chars: true
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5Dialect
+        hibernate:
+            ddl-auto: none
+        open-in-view: false
+        properties:
+            hibernate:
+                proc:
+                    param_null_passing: true
+                temp:
+                    use_jdbc_metadata_defaults: false
+        show-sql: false
+    main:
+        banner-mode: 'OFF'
