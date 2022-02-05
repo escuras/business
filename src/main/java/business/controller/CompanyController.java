@@ -2,10 +2,12 @@ package business.controller;
 
 import business.api.Api;
 import business.assembler.type.CompanyResponseAssembler;
+import business.assembler.type.PersonResponseAssembler;
 import business.domain.Company;
 import business.dto.request.CompanyRequest;
 import business.dto.request.PaginationRequest;
 import business.dto.response.CompanyResponse;
+import business.dto.response.PersonResponse;
 import business.service.CompanyService;
 import business.util.Constants;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class CompanyController implements Api<CompanyResponse, CompanyRequest> {
 
     private final CompanyService companyService;
     private final CompanyResponseAssembler assembler;
+    private final PersonResponseAssembler personResponseAssembler;
     private final PagedResourcesAssembler pagedAssembler;
     private final ConversionService conversionService;
 
@@ -75,4 +78,30 @@ public class CompanyController implements Api<CompanyResponse, CompanyRequest> {
         this.companyService.update(id, this.conversionService.convert(request, Company.class));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+    @PutMapping("/{companyId}/worker/{personId}")
+    public ResponseEntity<?> addWorker(@PathVariable final Long companyId, @PathVariable final Long personId) {
+        this.companyService.addWorker(companyId, personId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{companyId}/owner/{personId}")
+    public ResponseEntity<?> setOwner(@PathVariable final Long companyId, @PathVariable final Long personId) {
+        this.companyService.setOwner(companyId, personId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{companyId}/owner")
+    public ResponseEntity<PersonResponse> getOwner(@PathVariable final Long companyId) {
+        return this.companyService.getOwner(companyId)
+                .map(e -> new ResponseEntity<>(this.personResponseAssembler.toModel(e), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/{companyId}/workers")
+    public ResponseEntity<CollectionModel<PersonResponse>> getWorkers(@PathVariable final Long companyId) {
+        return ResponseEntity.ok(this.personResponseAssembler.toCollectionModel(this.companyService.getWorkers(companyId)));
+    }
+
 }

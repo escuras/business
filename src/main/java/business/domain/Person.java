@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = Constants.TABLE_PERSON_NAME)
@@ -30,11 +28,11 @@ public class Person extends Base {
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private List<Company> ownerCompanies = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "workers", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    private Set<Company> workingCompanies = new HashSet<>();
+    @ManyToMany(mappedBy = "workers", fetch = FetchType.LAZY)
+    private List<Company> workingCompanies = new ArrayList<>();
 
     @ManyToOne
     private Address address;

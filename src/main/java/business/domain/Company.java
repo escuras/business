@@ -20,7 +20,7 @@ import java.util.Set;
 public class Company extends Base {
 
     @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false, updatable = false)
+    @JoinColumn(name = "person_id", nullable = false)
     @NotNull
     private Person person;
 
@@ -38,14 +38,14 @@ public class Company extends Base {
 
     private LocalDateTime inclusionDate;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     @JoinTable(name = "company_workers",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "company_id"))
+            joinColumns = @JoinColumn(name = "foreign_company_id"),
+            inverseJoinColumns = @JoinColumn(name = "foreign_person_id"))
     private Set<Person> workers = new HashSet<>();
 
     @Builder
-    public Company(Long id, Person person, String sector, long workersNumber, String hrResponsible, String financesResponsible, String financesEmail, LocalDateTime inclusionDate) {
+    public Company(final Long id, final Person person, final String sector, final long workersNumber, final String hrResponsible, final String financesResponsible, final String financesEmail, final LocalDateTime inclusionDate) {
         super(id);
         this.person = person;
         this.sector = sector;
@@ -55,7 +55,8 @@ public class Company extends Base {
         this.financesEmail = financesEmail;
         this.inclusionDate = inclusionDate;
     }
-    
+
+
     @PrePersist
     private void addInclusionDate() {
         this.setInclusionDate(LocalDateTime.now());
