@@ -26,3 +26,7 @@ spring:
     show-sql: true
   main:
     banner-mode: 'OFF'
+
+domain:
+  viacep:
+    url: http://viacep.com.br/ws

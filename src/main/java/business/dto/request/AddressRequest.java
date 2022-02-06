@@ -6,18 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CompanyRequest {
-
-    private String sector;
-    private String hrResponsible;
-    private String financesResponsible;
-    private String financesEmail;
-    private Long personId;
-
+public class AddressRequest {
+    private Long cep;
+    private String local;
+    private String number;
+    private String complement;
+    private String district;
+    private String city;
+    private String uf;
+    private String country;
 }

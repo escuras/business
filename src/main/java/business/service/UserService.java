@@ -24,6 +24,8 @@ public interface UserService {
 
     void addProfile(Long id, String profileName);
 
+    void deleteProfile(Long id, String profileName);
+
     Profile getUserActiveProfile(Long id);
 
     Set<Profile> getUSerProfiles(Long id);

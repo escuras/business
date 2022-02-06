@@ -16,7 +16,6 @@ public class CompanyRequestToCompany implements Converter<CompanyRequest, Compan
                 .financesResponsible(source.getFinancesResponsible())
                 .hrResponsible(source.getHrResponsible())
                 .sector(source.getSector())
-                .id(source.getId())
                 .person(this.buildPerson(source.getPersonId()))
                 .build();
     }

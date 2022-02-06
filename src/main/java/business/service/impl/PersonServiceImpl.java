@@ -60,5 +60,6 @@ public class PersonServiceImpl implements PersonService {
         dbPerson.setDocument(person.getDocument());
         dbPerson.setEmail(person.getEmail());
         dbPerson.setName(person.getName());
+        dbPerson.setAddress(person.getAddress());
     }
 }

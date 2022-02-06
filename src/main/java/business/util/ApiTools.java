@@ -1,12 +1,11 @@
-package business.controller;
+package business.util;
 
-import business.util.Constants;
 import org.springframework.http.HttpHeaders;
 
 public class ApiTools {
 
-    public static HttpHeaders createHeadersPaginacao(final long totalElementos, final Integer page, final Integer size,
-													 final int tamanhoLista) {
+    public static HttpHeaders createHeadersWithPagination(final long totalElementos, final Integer page, final Integer size,
+                                                          final int tamanhoLista) {
         final int elementoInicial = (page * size) + 1;
         final int elementoFinal = (page * size) + tamanhoLista;
 

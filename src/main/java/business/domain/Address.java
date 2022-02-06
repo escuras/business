@@ -6,11 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = Constants.TABLE_ADDRESS_NAME)
@@ -19,10 +22,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class Address extends Base {
 
-    @ManyToMany
-    @JoinColumn(name = "person_id", nullable = false, updatable = false)
-    @NotNull
-    private Set<Person> persons = new HashSet<>();
+    @OneToMany(mappedBy = "address")
+    private List<Person> persons = new ArrayList<>();
 
     private Long cep;
     private String local;
@@ -35,11 +36,11 @@ public class Address extends Base {
     @NotNull
     private String country;
 
-    private Date inclusionDate;
+    private LocalDateTime inclusionDate;
 
 
     @Builder
-    public Address(Long id, Set<Person> persons, Long cep, String local, String number, String complement, String district, String city, String uf, String country, Date inclusionDate) {
+    public Address(final Long id, final List<Person> persons, final Long cep, final String local, final String number, final String complement, final String district, final String city, final String uf, final String country, final LocalDateTime inclusionDate) {
         super(id);
         this.persons = persons;
         this.cep = cep;
@@ -51,5 +52,10 @@ public class Address extends Base {
         this.uf = uf;
         this.country = country;
         this.inclusionDate = inclusionDate;
+    }
+
+    @PrePersist
+    private void inclusionDate() {
+        this.setInclusionDate(LocalDateTime.now());
     }
 }

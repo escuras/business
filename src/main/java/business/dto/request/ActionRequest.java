@@ -6,18 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CompanyRequest {
-
-    private String sector;
-    private String hrResponsible;
-    private String financesResponsible;
-    private String financesEmail;
-    private Long personId;
-
+public class ActionRequest {
+    
+    private String name;
+    private String description;
 }

@@ -24,7 +24,7 @@ public class UserProfile {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("profileId")
     @JoinColumn(name = "profile_id")
     private Profile profile;

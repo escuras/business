@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = Constants.TABLE_USER_LOG_NAME)
@@ -31,12 +32,26 @@ public class ActionLog extends Base {
 
     private String reason;
 
+    private Long userId;
+
+    private String profileName;
+
+    private LocalDateTime inclusionDate;
+
     @Builder
-    public ActionLog(Long id, Person person, Action action, String description, String reason) {
+    public ActionLog(final Long id, final Person person, final Action action, final String description, final String reason, final Long userId, final String profileName, final LocalDateTime inclusionDate) {
         super(id);
         this.person = person;
         this.action = action;
         this.description = description;
         this.reason = reason;
+        this.userId = userId;
+        this.profileName = profileName;
+        this.inclusionDate = inclusionDate;
+    }
+
+    @PrePersist
+    private void inclusionDate() {
+        this.setInclusionDate(LocalDateTime.now());
     }
 }

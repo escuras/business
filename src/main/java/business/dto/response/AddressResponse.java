@@ -1,6 +1,5 @@
 package business.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,20 +7,23 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class PersonResponse extends RepresentationModel<PersonResponse> {
+public class AddressResponse extends RepresentationModel<AddressResponse> {
 
     private Long id;
-    private String name;
-    private String email;
-    private Double document;
-    private boolean active;
+    private Long cep;
+    private String local;
+    private String number;
+    private String complement;
+    private String district;
+    private String city;
+    private String uf;
+    private String country;
+    private List<Long> userIds;
     private LocalDateTime inclusionDate;
-    private Long addressId;
-
 }

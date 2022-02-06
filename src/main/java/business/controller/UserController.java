@@ -9,6 +9,7 @@ import business.dto.request.UserRequest;
 import business.dto.response.ProfileResponse;
 import business.dto.response.UserResponse;
 import business.service.UserService;
+import business.util.ApiTools;
 import business.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -43,7 +44,7 @@ public class UserController implements Api<UserResponse, UserRequest> {
         if (totalPages.equals(Constants.TOTAL_PAGE_TO_CODE_200)) {
             return new ResponseEntity<>(this.pagedAssembler.toModel(users, this.assembler), HttpStatus.OK);
         }
-        final HttpHeaders header = ApiTools.createHeadersPaginacao(users.getTotalElements(), pagination.getPage(), pagination.getSize(), users.getContent().size());
+        final HttpHeaders header = ApiTools.createHeadersWithPagination(users.getTotalElements(), pagination.getPage(), pagination.getSize(), users.getContent().size());
         return new ResponseEntity<>(this.pagedAssembler.toModel(users, this.assembler), header, HttpStatus.PARTIAL_CONTENT);
     }
 
@@ -102,5 +103,11 @@ public class UserController implements Api<UserResponse, UserRequest> {
     @GetMapping("/{userId}/profile/active")
     public ResponseEntity<ProfileResponse> getActiveProfile(@PathVariable @NotNull final Long userId) {
         return ResponseEntity.ok(this.profileResponseAssembler.toModel(this.userService.getUserActiveProfile(userId)));
+    }
+
+    @DeleteMapping("/{userId}/profile/{profileName}")
+    public ResponseEntity<ProfileResponse> deleteProfile(@PathVariable @NotNull final Long userId, @PathVariable @NotNull final String profileName) {
+        this.userService.deleteProfile(userId, profileName);
+        return ResponseEntity.noContent().build();
     }
 }

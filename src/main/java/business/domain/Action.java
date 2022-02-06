@@ -20,7 +20,7 @@ import java.util.Set;
 public class Action extends Base {
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     private String description;
@@ -29,7 +29,7 @@ public class Action extends Base {
     private Set<ActionLog> personLogs = new HashSet<>();
 
     @Builder
-    public Action(Long id, String name, String description) {
+    public Action(final Long id, final String name, final String description) {
         super(id);
         this.name = name;
         this.description = description;

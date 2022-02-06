@@ -34,17 +34,19 @@ public class Person extends Base {
     @ManyToMany(mappedBy = "workers", fetch = FetchType.LAZY)
     private List<Company> workingCompanies = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @Builder
-    public Person(final Long id, final String name, final String email, final Double document, final boolean active, final LocalDateTime inclusionDate) {
+    public Person(final Long id, final String name, final String email, final Double document, final boolean active, final LocalDateTime inclusionDate, final Address address) {
         super(id);
         this.name = name;
         this.email = email;
         this.document = document;
         this.active = active;
         this.inclusionDate = inclusionDate;
+        this.address = address;
     }
 
     @PrePersist

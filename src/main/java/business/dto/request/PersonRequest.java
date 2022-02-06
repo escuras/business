@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PersonRequest {
 
-    private Long id;
     private String name;
     private String email;
     private Double document;
     private boolean active;
+    private Long addressId;
 
 }

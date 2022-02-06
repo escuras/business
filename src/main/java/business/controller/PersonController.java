@@ -7,6 +7,7 @@ import business.dto.request.PaginationRequest;
 import business.dto.request.PersonRequest;
 import business.dto.response.PersonResponse;
 import business.service.PersonService;
+import business.util.ApiTools;
 import business.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -41,7 +42,7 @@ public class PersonController implements Api<PersonResponse, PersonRequest> {
         if (totalPages.equals(Constants.TOTAL_PAGE_TO_CODE_200)) {
             return new ResponseEntity<>(this.pagedAssembler.toModel(persons, this.assembler), HttpStatus.OK);
         }
-        final HttpHeaders header = ApiTools.createHeadersPaginacao(persons.getTotalElements(), pagination.getPage(), pagination.getSize(), persons.getContent().size());
+        final HttpHeaders header = ApiTools.createHeadersWithPagination(persons.getTotalElements(), pagination.getPage(), pagination.getSize(), persons.getContent().size());
         return new ResponseEntity<>(this.pagedAssembler.toModel(persons, this.assembler), header, HttpStatus.PARTIAL_CONTENT);
     }
 
@@ -76,6 +77,6 @@ public class PersonController implements Api<PersonResponse, PersonRequest> {
         this.service.update(id, this.converterService.convert(personRequest, Person.class));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
+
 
 }

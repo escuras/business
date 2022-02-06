@@ -84,7 +84,27 @@ public class UserServiceImpl implements UserService {
                 .findFirst();
         final Optional<User> optionalUser = this.findById(id);
         if (optionalUser.isPresent() && optionalProfile.isPresent()) {
-            this.profileService.addProfile(optionalUser.get(), optionalProfile.get());
+            final User user = optionalUser.get();
+            final Profile profile = optionalProfile.get();
+            this.profileService.addProfile(user, profile);
+        }
+    }
+
+    @Override
+    public void deleteProfile(final Long id, final String profileName) {
+        final Optional<User> optionalUser = this.findById(id);
+        if (optionalUser.isPresent()) {
+            final User user = optionalUser.get();
+            final Optional<UserProfile> optionalUserProfile = user.getUserProfiles().stream()
+                    .filter(e -> e.getProfile().getName().equals(profileName))
+                    .findFirst();
+            if (optionalUserProfile.isPresent()) {
+                final UserProfile userProfile = optionalUserProfile.get();
+                if (!userProfile.isActive()) {
+                    user.getUserProfiles().remove(optionalUserProfile.get());
+                    this.userRepository.save(user);
+                }
+            }
         }
     }
 

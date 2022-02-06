@@ -80,6 +80,11 @@ public class ProfileServiceImpl implements ProfileService {
         profileKey.setProfileId(profile.getId());
         profileKey.setUserId(user.getId());
         userProfile.setId(profileKey);
+        userProfile.setProfile(profile);
+        userProfile.setUser(user);
+        if (CollectionUtils.isEmpty(user.getUserProfiles())) {
+            userProfile.setActive(true);
+        }
         this.userProfileRepository.save(userProfile);
     }
 

@@ -7,6 +7,7 @@ import business.dto.request.PaginationRequest;
 import business.dto.request.SampleRequest;
 import business.dto.response.SampleResponse;
 import business.service.SampleService;
+import business.util.ApiTools;
 import business.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -62,7 +63,7 @@ public class SampleController implements Api<SampleResponse, SampleRequest> {
         if (totalPages.equals(Constants.TOTAL_PAGE_TO_CODE_200)) {
             return new ResponseEntity<>(this.pagedAssembler.toModel(samples, this.assembler), HttpStatus.OK);
         }
-        final HttpHeaders header = ApiTools.createHeadersPaginacao(samples.getTotalElements(), pagination.getPage(), pagination.getSize(), samples.getContent().size());
+        final HttpHeaders header = ApiTools.createHeadersWithPagination(samples.getTotalElements(), pagination.getPage(), pagination.getSize(), samples.getContent().size());
         return new ResponseEntity<>(this.pagedAssembler.toModel(samples, this.assembler), header, HttpStatus.PARTIAL_CONTENT);
     }
 

@@ -9,6 +9,7 @@ import business.dto.request.PaginationRequest;
 import business.dto.response.CompanyResponse;
 import business.dto.response.PersonResponse;
 import business.service.CompanyService;
+import business.util.ApiTools;
 import business.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -44,7 +45,7 @@ public class CompanyController implements Api<CompanyResponse, CompanyRequest> {
         if (totalPages.equals(Constants.TOTAL_PAGE_TO_CODE_200)) {
             return new ResponseEntity<>(this.pagedAssembler.toModel(companies, this.assembler), HttpStatus.OK);
         }
-        final HttpHeaders header = ApiTools.createHeadersPaginacao(companies.getTotalElements(), pagination.getPage(), pagination.getSize(), companies.getContent().size());
+        final HttpHeaders header = ApiTools.createHeadersWithPagination(companies.getTotalElements(), pagination.getPage(), pagination.getSize(), companies.getContent().size());
         return new ResponseEntity<>(this.pagedAssembler.toModel(companies, this.assembler), header, HttpStatus.PARTIAL_CONTENT);
     }
 
