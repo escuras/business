@@ -49,3 +49,7 @@ springdoc:
   swagger-ui:
     operations-sorter: alpha
 
+domain:
+  viacep:
+    url: http://viacep.com.br/ws
+
