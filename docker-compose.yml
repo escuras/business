@@ -4,37 +4,30 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: 'cgd'
-      # # MYSQL_USER: 'root'
-      # MYSQL_PASSWORD: 'cgd'
-      MYSQL_ROOT_PASSWORD: 'cgd'
+      #MYSQL_USER: 'root'
+      #MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - '3306:3306'
-    expose:
-      - '3306'
+      - '3307:3306'
     volumes:
       - db:/var/lib/mysql
-    networks:
-      backend:
+
   app:
+    image: app:latest
     depends_on:
       - db
     build:
-      context: docker
+      context: .
     container_name: app
     expose:
       - '8080'
     ports:
       - "8080:8080"
-    restart: always
-    environment: # Pass environment variables to the service
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/cgd?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/cgd?autoReconnect=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: cgd
-    networks:
-      backend:
+      SPRING_DATASOURCE_PASSWORD: root
+    restart: unless-stopped
 
 volumes:
   db:
-
-networks:
-  backend:

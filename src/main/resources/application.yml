@@ -7,10 +7,10 @@ server:
   port: 8080
 spring:
   application:
-    name: sample-cgd
+    name: cgd
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3360/cgd?useSSL=false
+    url: jdbc:mysql://localhost:3306/cgd?useSSL=false
     username: root
     password: root
   hateoas:
