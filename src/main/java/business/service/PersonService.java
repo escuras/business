@@ -18,4 +18,6 @@ public interface PersonService {
 
     void update(Long id, Person person);
 
+    void setActive(Long id, boolean active);
+
 }

@@ -78,5 +78,9 @@ public class PersonController implements Api<PersonResponse, PersonRequest> {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @PatchMapping("/{id}/active/{active}")
+    public ResponseEntity<?> setActive(@PathVariable final Long id, @PathVariable final boolean active) {
+        this.service.setActive(id, active);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

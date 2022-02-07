@@ -62,4 +62,13 @@ public class PersonServiceImpl implements PersonService {
         dbPerson.setName(person.getName());
         dbPerson.setAddress(person.getAddress());
     }
+
+    @Override
+    @Transactional
+    public void setActive(final Long id, final boolean active) {
+        final Person dbPerson = this.personRepository.findById(id).orElseGet(() -> {
+            throw new BusinessException("User does not exist.");
+        });
+        dbPerson.setActive(active);
+    }
 }
